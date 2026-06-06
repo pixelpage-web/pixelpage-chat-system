@@ -23,8 +23,6 @@ import {
 
 import { cn } from '@/lib/utils';
 import ThemeLanguageToggle from '@/app/components/ThemeLanguageToggle';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useThemeLang } from '@/app/components/ThemeLanguageProvider';
 
 interface SidebarLayoutProps {
   children: ReactNode;
