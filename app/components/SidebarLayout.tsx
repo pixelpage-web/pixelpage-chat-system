@@ -23,6 +23,7 @@ import {
 
 import { cn } from '@/lib/utils';
 import ThemeLanguageToggle from '@/app/components/ThemeLanguageToggle';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useThemeLang } from '@/app/components/ThemeLanguageProvider';
 
 interface SidebarLayoutProps {
@@ -92,7 +93,6 @@ const navSections = [
 
 export default function SidebarLayout({ children, userId, appName }: SidebarLayoutProps) {
   const pathname = usePathname();
-  const { t } = useThemeLang();
 
   return (
     <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
