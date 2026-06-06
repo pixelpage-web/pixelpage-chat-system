@@ -10,7 +10,7 @@
     --font-mono: "JetBrains Mono", ui-monospace, monospace;
   }
   html {
-    font-size: 16px; /* bumped from browser default 14-15px effective size */
+    font-size: 16px;
   }
   body {
     font-family: var(--font-sans);
@@ -23,9 +23,6 @@
   }
 }
 
-
-
-
 @import 'tailwindcss';
 
 @theme {
@@ -36,14 +33,6 @@
   );
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
@@ -68,5 +57,38 @@
   body {
     color: rgb(var(--foreground-rgb));
     background: #f8f9fb;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* ── Dark mode ── */
+  html.dark body {
+    background: #0f1117;
+    color: #e2e8f0;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Sidebar dark */
+  html.dark .bg-white { background-color: #1a1d27 !important; }
+  html.dark .bg-gray-50 { background-color: #13151f !important; }
+  html.dark .bg-gray-100 { background-color: #1e2130 !important; }
+  html.dark .text-gray-900 { color: #f1f5f9 !important; }
+  html.dark .text-gray-700 { color: #cbd5e1 !important; }
+  html.dark .text-gray-600 { color: #94a3b8 !important; }
+  html.dark .text-gray-500 { color: #64748b !important; }
+  html.dark .border-gray-200 { border-color: #2d3148 !important; }
+  html.dark .border-gray-100 { border-color: #252840 !important; }
+
+  /* Cards dark */
+  html.dark .shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.4) !important; }
+  html.dark .shadow-md { box-shadow: 0 4px 6px rgba(0,0,0,0.5) !important; }
+
+  /* Inputs dark */
+  html.dark input, html.dark textarea, html.dark select {
+    background-color: #1e2130 !important;
+    color: #e2e8f0 !important;
+    border-color: #2d3148 !important;
   }
 }

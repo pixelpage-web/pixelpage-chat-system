@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
+import ThemeLanguageToggle from '@/app/components/ThemeLanguageToggle';
+import { useThemeLang } from '@/app/components/ThemeLanguageProvider';
 
 interface SidebarLayoutProps {
   children: ReactNode;
@@ -90,6 +92,7 @@ const navSections = [
 
 export default function SidebarLayout({ children, userId, appName }: SidebarLayoutProps) {
   const pathname = usePathname();
+  const { t } = useThemeLang();
 
   return (
     <div className="h-screen flex flex-col bg-gray-50 overflow-hidden">
@@ -184,6 +187,7 @@ export default function SidebarLayout({ children, userId, appName }: SidebarLayo
               </div>
             ))}
           </nav>
+          <ThemeLanguageToggle />
         </aside>
 
         {/* Main content */}

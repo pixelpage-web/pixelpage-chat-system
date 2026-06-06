@@ -14,6 +14,7 @@ import '@/app/globals.css';
 import ErrorBoundary from '@/app/components/ErrorBoundary';
 import MissingEnvVars from '@/app/components/MissingEnvVars';
 import { getMissingEnvVars, type MissingEnvVarInfo } from '@/app/envChecker';
+import { ThemeLangProvider } from '@/app/components/ThemeLanguageProvider';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -30,9 +31,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Sample Tech Provider',
-  description:
-    'A sample tech provider that allows for easy instantiation by developers, and easy testing of Meta Business products, onboarding. and APIs',
+  title: 'PixelPage Chat',
+  description: 'Plataforma de WhatsApp Business API - PixelPage',
 };
 
 export default function RootLayout({
@@ -40,13 +40,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Check for missing environment variables
   const missingEnvVars: MissingEnvVarInfo[] = getMissingEnvVars();
 
-  // If there are missing environment variables, show the error page
   if (missingEnvVars.length > 0) {
     return (
-      <html lang="en">
+      <html lang="pt-BR">
         <body className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
           <MissingEnvVars missingVars={missingEnvVars} />
         </body>
@@ -55,22 +53,19 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <Script src="https://connect.facebook.net/en_US/sdk.js" strategy="afterInteractive" />
-
       <body className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <ErrorBoundary>{children}</ErrorBoundary>
-        <footer className="text-center px-4 py-3 text-xs text-gray-500 border-t border-gray-200 mt-6">
-          <span>Copyright &copy; {new Date().getFullYear()} Meta Platforms, Inc. All rights reserved.</span>
-          {' · '}
-          <a href="https://opensource.fb.com/legal/terms" target="_blank" rel="noopener noreferrer" className="text-gray-500 underline">
-            Terms of Use
-          </a>
-          {' · '}
-          <a href="https://opensource.fb.com/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-gray-500 underline">
-            Privacy Policy
-          </a>
-        </footer>
+        <ThemeLangProvider>
+          <ErrorBoundary>{children}</ErrorBoundary>
+          <footer className="text-center px-4 py-3 text-xs text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-700 mt-6">
+            <span>© {new Date().getFullYear()} PixelPage Chat. Todos os direitos reservados.</span>
+            {' · '}
+            <a href="/privacy" className="text-gray-500 dark:text-gray-400 underline">
+              Política de Privacidade
+            </a>
+          </footer>
+        </ThemeLangProvider>
         <SpeedInsights />
         <Analytics />
       </body>
