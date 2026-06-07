@@ -58,6 +58,21 @@ export async function POST(request: NextRequest) {
     await channel.publish('first', data);
     console.log('[Webhook] Published raw data. object:', data.object, 'fields:', data.entry?.map((e: { changes?: { field: string }[] }) => e.changes?.map((c) => c.field)).flat());
 
+    // Repassa para o n8n (Zari Bot)
+    const n8nUrl = process.env.N8N_WEBHOOK_URL;
+    if (n8nUrl) {
+      try {
+        await fetch(n8nUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: rawBody,
+        });
+        console.log('[Webhook] Repassado para n8n com sucesso');
+      } catch (e) {
+        console.error('[Webhook] Erro ao repassar para n8n:', e);
+      }
+    }
+
     if (data.object === 'whatsapp_business_account') {
       for (const entry of data.entry ?? []) {
         for (const change of entry.changes ?? []) {
