@@ -117,7 +117,23 @@ async function sendToChatwoot(conversationId: number, message: string) {
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const rawBody = await req.text();
+    const headers: Record<string, string> = {};
+    req.headers.forEach((value, key) => { headers[key] = value; });
+
+    console.log('[Zari] === POST RECEBIDO ===');
+    console.log('[Zari] Headers:', JSON.stringify(headers));
+    console.log('[Zari] Body raw:', rawBody);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let body: any;
+    try {
+      body = JSON.parse(rawBody);
+    } catch {
+      console.log('[Zari] ERRO: body nao e JSON valido');
+      return NextResponse.json({ ok: true });
+    }
+
     console.log('[Zari] Evento:', body.event, '| Tipo:', body.message_type);
 
     if (body.event !== 'message_created') return NextResponse.json({ ok: true });
